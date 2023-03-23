@@ -1,0 +1,9 @@
+program Primer; //summ of two numbers
+var
+   x,y,s: integer;
+begin
+  WriteLn('Enter x,y ');
+  ReadLn(x,y);
+  s := x + y;
+  WriteLn('Summ is ',s);
+end.
