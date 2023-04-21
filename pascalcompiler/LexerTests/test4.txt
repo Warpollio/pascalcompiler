@@ -1,0 +1,39 @@
+program TestLexer;
+
+var
+  a: integer;
+  b: real;
+  s: string;
+  c: char;
+  flag: boolean;
+
+begin
+  a := 10;
+  b := 3.14;
+  s := 'Hello, world!';
+  c := 'x';
+  flag := true;
+  
+  writeln('Integer variable: ', a);
+  writeln('Real variable: ', b);
+  writeln('String variable: ', s);
+  writeln('Char variable: ', c);
+  writeln('Boolean variable: ', flag);
+  
+  if a > 5 then
+    writeln('a is greater than 5')
+  else
+    writeln('a is not greater than 5');
+  
+  while a > 0 do
+  begin
+    writeln(a);
+    a := a - 1;
+  end;
+  
+  for a := 1 to 5 do
+  begin
+    writeln(a);
+  end;
+  
+end.

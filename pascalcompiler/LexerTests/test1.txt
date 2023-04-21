@@ -1,8 +1,14 @@
+_identifier123 := +124.12e10
+-23412.23
+1e1
 program Primer; //summ of two numbers
+xdd
+
 var
    x,y,s: integer;
 begin
   WriteLn('Enter x,y ');
+  _identifier123 := 124.12e252
   ReadLn(x,y);
   s := x + y;
   WriteLn('Summ is ',s);
