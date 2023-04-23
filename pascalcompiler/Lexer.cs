@@ -14,8 +14,6 @@ namespace pascalcompiler
             OBJECT, OF, OPERATOR, OR, PACKED, PROCEDURE, PROGRAM, RECORD, REINTRODUCE, REPEAT, SELF, SET, SHL, SHR,
             STRING, THEN, TO, TYPE, UNIT, UNTIL, USES, VAR, WHILE, WITH, XOR
         }
-        public char[] specialSymbols = {'<', '>', '*', ':', '+', '-', '/', '(', ')', '.', '=', '\'', '[', ']', ',', '^', '@', '{', '}', '$', '#', '&', '%', ';'};
-        public string[] specialPairs = { "<<", ">>", "**", "<>", "><", "<=", ">=", ":=", "+=", "-=", "*=", "/=", "(*", "*)", "(.", ".)", "//" };
         private StreamReader _reader;
         private string buffer;
         private char currentChar;
@@ -121,7 +119,7 @@ namespace pascalcompiler
             }
         }
         
-        enum Symbols
+        public enum Symbols
         {
             LessThan, // <
             GreaterThan, // >
@@ -177,6 +175,7 @@ namespace pascalcompiler
                     switch (currentChar)
                     {
                         case '/':
+                            AddBuff(currentChar);
                             while (ReadNext())
                             {
                                 if (currentChar == '\n')
@@ -190,7 +189,7 @@ namespace pascalcompiler
                         case '=':
                             AddBuff(currentChar);
                             ReadNext();
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.DivideAssign, buffer);
+                            return AddToken(row, pos, Type.OPERATOR, Symbols.DivideAssign, buffer);
                         default:
                             return AddToken(row, pos, Type.OPERATOR, Symbols.Divide, buffer);
                     }
@@ -256,7 +255,7 @@ namespace pascalcompiler
                             ReadNext();
                             return AddToken(row, pos, Type.OPERATOR, Symbols.Assign, buffer);
                         default:
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Colon, buffer);
+                            return AddToken(row, pos, Type.SEPARATORS, Symbols.Colon, buffer);
                     }
                 case '+':
                     switch (currentChar)
@@ -264,7 +263,7 @@ namespace pascalcompiler
                         case '=':
                             AddBuff(currentChar);
                             ReadNext();
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.PlusAssign, buffer);
+                            return AddToken(row, pos, Type.OPERATOR, Symbols.PlusAssign, buffer);
                         default:
                             return AddToken(row, pos, Type.OPERATOR, Symbols.Plus, buffer);
                     }
@@ -274,7 +273,7 @@ namespace pascalcompiler
                         case '=':
                             AddBuff(currentChar);
                             ReadNext();
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.MinusAssign, buffer);
+                            return AddToken(row, pos, Type.OPERATOR, Symbols.MinusAssign, buffer);
                         default:
                             return AddToken(row, pos, Type.OPERATOR, Symbols.Minus, buffer);
                     }
@@ -311,30 +310,30 @@ namespace pascalcompiler
                         case '.':
                             AddBuff(currentChar);
                             ReadNext();
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.LeftParenDot, buffer);
+                            return AddToken(row, pos, Type.SEPARATORS, Symbols.LeftParenDot, buffer);
                         default:
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.LeftParen, buffer);
+                            return AddToken(row, pos, Type.SEPARATORS, Symbols.LeftParen, buffer);
                     }
                 case ')':
-                    return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.RightParen, buffer);
+                    return AddToken(row, pos, Type.SEPARATORS, Symbols.RightParen, buffer);
                 case '.':
                     switch (currentChar)
                     {
                         case ')':
                             AddBuff(currentChar);
                             ReadNext();
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.DotRightParen, buffer);
+                            return AddToken(row, pos, Type.SEPARATORS, Symbols.DotRightParen, buffer);
                         default:
-                            return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Dot, buffer);
+                            return AddToken(row, pos, Type.SEPARATORS, Symbols.Dot, buffer);
                     }
                 case '=':
-                    return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Equals, buffer);
+                    return AddToken(row, pos, Type.OPERATOR, Symbols.Equals, buffer);
                 case '\'':
                     return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.SingleQuote, buffer);
                 case '[':
-                    return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.LeftBracket, buffer);
+                    return AddToken(row, pos, Type.SEPARATORS, Symbols.LeftBracket, buffer);
                 case ']':
-                    return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.RightBracket, buffer);
+                    return AddToken(row, pos, Type.SEPARATORS, Symbols.RightBracket, buffer);
                 case ',':
                     return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Comma, buffer);
                 case '^':

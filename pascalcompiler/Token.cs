@@ -31,7 +31,7 @@ namespace pascalcompiler
 
         public override string ToString()
         {
-            return "    " + row + "    " + pos + "    " + type + "    " + value + "    " + source + "    ";
+            return row + "    " + pos + "    " + type + "    " + value + "    " + source + "    ";
         }
     }
 
