@@ -27,6 +27,7 @@ namespace pascalcompiler
         public Lexer(StreamReader reader)
         {
             _reader = reader;
+            ReadNext();
         }
         bool ReadNext()
         {
@@ -373,7 +374,7 @@ namespace pascalcompiler
                 case '%':
                     return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Percent, buffer);
                 case ';':
-                    return AddToken(row, pos, Type.SPECIALSYMBOLS, Symbols.Semicolon, buffer);
+                    return AddToken(row, pos, Type.SEPARATORS, Symbols.Semicolon, buffer);
                 default:
                     return AddToken(row, pos, Type.ERROR, "Unknown symbol error", buffer);
 
